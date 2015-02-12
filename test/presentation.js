@@ -79,12 +79,37 @@ describe("DOM Manager", function () {
         expect(div.children[0].clientWidth).toEqual(800);
     });
 
-    it("should bring first element to front", function() {
+    it("should leave first element visible and hide others", function() {
         var div = document.getElementsByClassName("presentation")[0];
         yaPresentation._DOMManager.setInitialStyles(div, div.children);
 
-        expect(div.children[0].style.zIndex).toEqual("10");
-        expect(div.children[1].style.zIndex).toEqual("");
+        expect(div.children[0].style.visibility).toEqual("");
+        expect(div.children[1].style.visibility).toEqual("hidden");
+    });
+
+    it("should be able to make slide moves (begin moves)", function() {
+        var div = document.getElementsByClassName("presentation")[0];
+        yaPresentation._DOMManager.setInitialStyles(div, div.children);
+        yaPresentation._DOMManager.makeMove(div.children[0], div.children[1]);
+
+        expect(div.children[0].className).toMatch(/yap--toOut/);
+        expect(div.children[0].className).toMatch(/yap--out/);
+        expect(div.children[1].className).toMatch(/yap--toIn/);
+        expect(div.children[1].className).toMatch(/yap--in/);
+    });
+
+    it("should be able to make slide moves (finish moves)", function(done) {
+        var div = document.getElementsByClassName("presentation")[0];
+        yaPresentation._DOMManager.setInitialStyles(div, div.children);
+        yaPresentation._DOMManager.makeMove(div.children[0], div.children[1]);
+
+        setTimeout(function() {
+            expect(div.children[0].className).not.toMatch(/yap--toOut/);
+            expect(div.children[0].className).not.toMatch(/yap--out/);
+            expect(div.children[1].className).not.toMatch(/yap--toIn/);
+            expect(div.children[1].className).not.toMatch(/yap--in/);
+            done();
+        }, 600);
     });
 
 

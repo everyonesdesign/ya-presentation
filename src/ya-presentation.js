@@ -41,8 +41,19 @@ yaPresentation._extend(yaPresentation, {
                 children[i].style.left = 0;
                 children[i].style.bottom = 0;
                 children[i].style.position = "absolute";
-                if (!i) children[i].style.zIndex = 10;
+                if (i) children[i].style.visibility = "hidden";
             }
+        },
+        makeMove: function(prev, next) {
+            next.style.visibility = "";
+            next.className += " yap--toIn";
+            next.className += " yap--in";
+            prev.className += " yap--toOut";
+            prev.className += " yap--out";
+            setTimeout(function() {
+                next.className = next.className.replace(/\s?(yap--toIn|yap--in)/g, "");
+                prev.className = prev.className.replace(/\s?(yap--toOut|yap--out)/g, "");
+            }, 500); //TODO: remove this hardcode
         }
     }
 
