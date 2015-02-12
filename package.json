@@ -1,0 +1,23 @@
+{
+  "name": "ya-presentation",
+  "version": "1.0.0",
+  "description": "yet-another presentation for Yandex",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/everyonesdesign/ya-presentation.git"
+  },
+  "author": "everyonesdesign <tr.yura@yahoo.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/everyonesdesign/ya-presentation/issues"
+  },
+  "homepage": "https://github.com/everyonesdesign/ya-presentation",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jasmine": "^0.8.2"
+  }
+}
