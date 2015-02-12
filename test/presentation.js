@@ -87,7 +87,7 @@ describe("DOM Manager", function () {
         expect(div.children[1].style.visibility).toEqual("hidden");
     });
 
-    it("should be able to make slide moves (begin moves)", function() {
+    it("should be able to add CSS classes (begin moves)", function() {
         var div = document.getElementsByClassName("presentation")[0];
         yaPresentation._DOMManager.setInitialStyles(div, div.children);
         yaPresentation._DOMManager.makeMove(div.children[0], div.children[1]);
@@ -98,7 +98,7 @@ describe("DOM Manager", function () {
         expect(div.children[1].className).toMatch(/yap--in/);
     });
 
-    it("should be able to make slide moves (finish moves)", function(done) {
+    it("should be able to remove CSS classes (finish moves)", function(done) {
         var div = document.getElementsByClassName("presentation")[0];
         yaPresentation._DOMManager.setInitialStyles(div, div.children);
         yaPresentation._DOMManager.makeMove(div.children[0], div.children[1]);
