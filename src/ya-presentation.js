@@ -30,7 +30,7 @@ yaPresentation._extend(yaPresentation, {
         return !index ? count - 1 : index - 1;
     },
 
-    getActive: function(children) {
+    _getActive: function(children) {
         for (var i=0; i<children.length; i++) {
             if (children[i].style.visibility != "hidden") {
                 return i;
@@ -40,13 +40,13 @@ yaPresentation._extend(yaPresentation, {
 
     _moveManager: {
         goToAdjacentSlide: function(children, next) {
-            var active = yaPresentation.getActive(children),
+            var active = yaPresentation._getActive(children),
                 method = next ? "_next" : "_prev";
             next = yaPresentation[method](active, children.length);
             yaPresentation._DOMManager.makeMove(children[active], children[next]);
         },
         goToSlide: function(children, index) {
-            var active = yaPresentation.getActive(children);
+            var active = yaPresentation._getActive(children);
             yaPresentation._DOMManager.makeMove(children[active], children[index]);
         },
         goToPrevSlide: function(children) {
@@ -74,9 +74,11 @@ yaPresentation._extend(yaPresentation, {
         makeMove: function(prev, next) {
             next.style.visibility = "";
             next.className += " yap--toIn";
-            next.className += " yap--in";
             prev.className += " yap--toOut";
-            prev.className += " yap--out";
+            setTimeout(function() {
+                next.className += " yap--in";
+                prev.className += " yap--out";
+            }, 0);
             setTimeout(function() {
                 next.className = next.className.replace(/\s?(yap--toIn|yap--in)/g, "");
                 prev.className = prev.className.replace(/\s?(yap--toOut|yap--out)/g, "");

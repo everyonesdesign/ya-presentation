@@ -1,10 +1,10 @@
+/*
+*    BASIC STYLES
+*/
+
 .container {
     width: 800px;
     margin: 60px auto;
-}
-
-.presentation {
-
 }
 
 .presentation-item {
@@ -21,4 +21,34 @@
 .presentation-item h6 {
     text-align: center;
 }
+
+/*
+*    ANIMATIONS
+*/
+
+.yap--toIn {
+    opacity: 0;
+}
+.yap--in {
+    opacity: 1;
+}
+.yap--toOut {
+    opacity: 1;
+    z-index: 1;
+}
+.yap--out {
+    opacity: 0;
+}
+
+/*
+*    ADDITIONAL
+*/
+
+.presentation-item + .presentation-item {
+    background: #ffaaaa;
+}
+.presentation-item + .presentation-item + .presentation-item {
+    background: #aaffaa;
+}
+
 
