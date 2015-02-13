@@ -19,6 +19,12 @@ function prepareHTML() {
     }
 }
 
+function bootstrapPresentation() {
+    var div = document.getElementsByClassName("presentation")[0];
+    yaPresentation._DOMManager.setInitialStyles(div, div.children);
+    return div;
+}
+
 function clearHTML() {
     document.getElementById("fixture").innerHTML = "";
 }
@@ -70,8 +76,7 @@ describe("DOM Manager", function () {
     });
 
     it("should be able to set initial styles", function () {
-        var div = document.getElementsByClassName("presentation")[0];
-        yaPresentation._DOMManager.setInitialStyles(div, div.children);
+        var div = bootstrapPresentation();
         expect(div.style.overflow).toEqual("hidden");
         expect(div.clientHeight).toEqual(400);
 
@@ -80,8 +85,7 @@ describe("DOM Manager", function () {
     });
 
     it("should leave first element visible and hide others", function() {
-        var div = document.getElementsByClassName("presentation")[0];
-        yaPresentation._DOMManager.setInitialStyles(div, div.children);
+        var div = bootstrapPresentation();
 
         expect(div.children[0].style.visibility).toEqual("");
         expect(div.children[1].style.visibility).toEqual("hidden");
@@ -99,8 +103,7 @@ describe("DOM Manager", function () {
     });
 
     it("should be able to remove CSS classes (finish moves)", function(done) {
-        var div = document.getElementsByClassName("presentation")[0];
-        yaPresentation._DOMManager.setInitialStyles(div, div.children);
+        var div = bootstrapPresentation();
         yaPresentation._DOMManager.makeMove(div.children[0], div.children[1]);
 
         setTimeout(function() {
@@ -112,6 +115,42 @@ describe("DOM Manager", function () {
         }, 600);
     });
 
+});
+
+describe("Go to next and prev slide", function() {
+
+    beforeEach(function() {
+        prepareHTML();
+    });
+    afterEach(function() {
+        clearHTML();
+    });
+
+    it("should be able to get active slide", function() {
+        var div = bootstrapPresentation();
+        var active = yaPresentation.getActive(div.children);
+        expect(active).toEqual(0);
+    });
+
+    it("should be able to go prev", function(done) {
+        var div = bootstrapPresentation();
+        yaPresentation.goToPrevSlide(div.children);
+        setTimeout(function() {
+            expect(div.children[2].style.visibility).toEqual("");
+            expect(div.children[0].style.visibility).toEqual("hidden");
+            done();
+        }, 600);
+    });
+
+    it("should be able to go next", function(done) {
+        var div = bootstrapPresentation();
+        yaPresentation.goToNextSlide(div.children);
+        setTimeout(function() {
+            expect(div.children[1].style.visibility).toEqual("");
+            expect(div.children[0].style.visibility).toEqual("hidden");
+            done();
+        }, 600);
+    });
 
 });
 

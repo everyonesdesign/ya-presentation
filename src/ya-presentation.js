@@ -30,6 +30,29 @@ yaPresentation._extend(yaPresentation, {
         return !index ? count - 1 : index - 1;
     },
 
+    getActive: function(children) {
+        for (var i=0; i<children.length; i++) {
+            if (children[i].style.visibility != "hidden") {
+                return i;
+            }
+        }
+    },
+
+    goToAdjacentSlide: function(children, next) {
+        var active = yaPresentation.getActive(children),
+            method = next ? "_next" : "_prev";
+            next = yaPresentation[method](active, children.length);
+        yaPresentation._DOMManager.makeMove(children[active], children[next]);
+    },
+
+    goToPrevSlide: function(children) {
+        yaPresentation.goToAdjacentSlide(children, false);
+    },
+
+    goToNextSlide: function(children) {
+        yaPresentation.goToAdjacentSlide(children, true);
+    },
+
     _DOMManager: {
         setInitialStyles: function (el, children) {
             el.style.overflow = "hidden";
@@ -53,6 +76,7 @@ yaPresentation._extend(yaPresentation, {
             setTimeout(function() {
                 next.className = next.className.replace(/\s?(yap--toIn|yap--in)/g, "");
                 prev.className = prev.className.replace(/\s?(yap--toOut|yap--out)/g, "");
+                prev.style.visibility = "hidden";
             }, 500); //TODO: remove this hardcode
         }
     }
