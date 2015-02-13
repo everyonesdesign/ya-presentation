@@ -167,3 +167,27 @@ describe("Go to slide", function() {
 
 });
 
+describe("Animation", function () {
+
+    beforeEach(function () {
+        prepareHTML();
+    });
+    afterEach(function () {
+        clearHTML();
+    });
+
+    it("adds transform to object", function () {
+        var div = bootstrapPresentation();
+        yaPresentation._setAnimation(div.children, 200);
+        expect(div.children[0].style.transition).toEqual("200ms");
+    });
+
+    it("can reset animation", function () {
+        var div = bootstrapPresentation();
+        yaPresentation._setAnimation(div.children, 200);
+        yaPresentation._resetAnimation(div.children);
+        expect(div.children[0].style.transition).toEqual("");
+    });
+
+});
+

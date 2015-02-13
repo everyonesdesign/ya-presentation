@@ -22,6 +22,8 @@ yaPresentation._extend = function (target, source) {
 
 yaPresentation._extend(yaPresentation, {
 
+    _vendors: ["webkit", "moz", "ms", "o"],
+
     _next: function (index, count) {
         return index == count - 1 ? 0 : index + 1;
     },
@@ -36,6 +38,20 @@ yaPresentation._extend(yaPresentation, {
                 return i;
             }
         }
+    },
+
+    _setAnimation: function(children, duration) {
+        var value = duration ? duration+"ms" : "";
+        for (var i=0; i<children.length; i++) {
+            for (var j=0; j<yaPresentation._vendors.length; j++) {
+                children[i].style[yaPresentation._vendors[j]+"transition"] = value;
+            }
+            children[i].style["transition"] = value;
+        }
+    },
+
+    _resetAnimation: function(children) {
+        yaPresentation._setAnimation(children, null);
     },
 
     _moveManager: {
@@ -75,6 +91,7 @@ yaPresentation._extend(yaPresentation, {
             next.style.visibility = "";
             next.className += " yap--toIn";
             prev.className += " yap--toOut";
+            //0 timeout to make CSS animations work
             setTimeout(function() {
                 next.className += " yap--in";
                 prev.className += " yap--out";
