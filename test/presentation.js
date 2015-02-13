@@ -117,7 +117,7 @@ describe("DOM Manager", function () {
 
 });
 
-describe("Go to next and prev slide", function() {
+describe("Go to slide", function() {
 
     beforeEach(function() {
         prepareHTML();
@@ -147,6 +147,16 @@ describe("Go to next and prev slide", function() {
         yaPresentation.goToNextSlide(div.children);
         setTimeout(function() {
             expect(div.children[1].style.visibility).toEqual("");
+            expect(div.children[0].style.visibility).toEqual("hidden");
+            done();
+        }, 600);
+    });
+
+    it("should be able to go to slide by index", function(done) {
+        var div = bootstrapPresentation();
+        yaPresentation.goToSlide(div.children, 2);
+        setTimeout(function() {
+            expect(div.children[2].style.visibility).toEqual("");
             expect(div.children[0].style.visibility).toEqual("hidden");
             done();
         }, 600);

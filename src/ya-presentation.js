@@ -45,6 +45,11 @@ yaPresentation._extend(yaPresentation, {
         yaPresentation._DOMManager.makeMove(children[active], children[next]);
     },
 
+    goToSlide: function(children, index) {
+        var active = yaPresentation.getActive(children);
+        yaPresentation._DOMManager.makeMove(children[active], children[index]);
+    },
+
     goToPrevSlide: function(children) {
         yaPresentation.goToAdjacentSlide(children, false);
     },
