@@ -38,24 +38,23 @@ yaPresentation._extend(yaPresentation, {
         }
     },
 
-    goToAdjacentSlide: function(children, next) {
-        var active = yaPresentation.getActive(children),
-            method = next ? "_next" : "_prev";
+    _moveManager: {
+        goToAdjacentSlide: function(children, next) {
+            var active = yaPresentation.getActive(children),
+                method = next ? "_next" : "_prev";
             next = yaPresentation[method](active, children.length);
-        yaPresentation._DOMManager.makeMove(children[active], children[next]);
-    },
-
-    goToSlide: function(children, index) {
-        var active = yaPresentation.getActive(children);
-        yaPresentation._DOMManager.makeMove(children[active], children[index]);
-    },
-
-    goToPrevSlide: function(children) {
-        yaPresentation.goToAdjacentSlide(children, false);
-    },
-
-    goToNextSlide: function(children) {
-        yaPresentation.goToAdjacentSlide(children, true);
+            yaPresentation._DOMManager.makeMove(children[active], children[next]);
+        },
+        goToSlide: function(children, index) {
+            var active = yaPresentation.getActive(children);
+            yaPresentation._DOMManager.makeMove(children[active], children[index]);
+        },
+        goToPrevSlide: function(children) {
+            yaPresentation._moveManager.goToAdjacentSlide(children, false);
+        },
+        goToNextSlide: function(children) {
+            yaPresentation._moveManager.goToAdjacentSlide(children, true);
+        }
     },
 
     _DOMManager: {

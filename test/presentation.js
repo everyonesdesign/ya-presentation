@@ -134,7 +134,7 @@ describe("Go to slide", function() {
 
     it("should be able to go prev", function(done) {
         var div = bootstrapPresentation();
-        yaPresentation.goToPrevSlide(div.children);
+        yaPresentation._moveManager.goToPrevSlide(div.children);
         setTimeout(function() {
             expect(div.children[2].style.visibility).toEqual("");
             expect(div.children[0].style.visibility).toEqual("hidden");
@@ -144,7 +144,7 @@ describe("Go to slide", function() {
 
     it("should be able to go next", function(done) {
         var div = bootstrapPresentation();
-        yaPresentation.goToNextSlide(div.children);
+        yaPresentation._moveManager.goToNextSlide(div.children);
         setTimeout(function() {
             expect(div.children[1].style.visibility).toEqual("");
             expect(div.children[0].style.visibility).toEqual("hidden");
@@ -154,7 +154,7 @@ describe("Go to slide", function() {
 
     it("should be able to go to slide by index", function(done) {
         var div = bootstrapPresentation();
-        yaPresentation.goToSlide(div.children, 2);
+        yaPresentation._moveManager.goToSlide(div.children, 2);
         setTimeout(function() {
             expect(div.children[2].style.visibility).toEqual("");
             expect(div.children[0].style.visibility).toEqual("hidden");
