@@ -188,5 +188,19 @@ describe("Animation", function () {
         expect(div.children[0].style.transition).toEqual("");
     });
 
+    it("toggles animation class", function () {
+        var div = bootstrapPresentation();
+        yaPresentation._DOMManager.setAnimationClass(div, "slide");
+        expect(/\byap--ef-slide\b/.test(div.className)).toBe(true);
+    });
+
+    it("overrides animation class", function () {
+        var div = bootstrapPresentation();
+        yaPresentation._DOMManager.setAnimationClass(div, "slide");
+        yaPresentation._DOMManager.setAnimationClass(div, "fade");
+        expect(/\byap--ef-slide\b/.test(div.className)).toBe(false);
+        expect(/\byap--ef-fade\b/.test(div.className)).toBe(true);
+    });
+
 });
 

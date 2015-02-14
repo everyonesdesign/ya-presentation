@@ -102,6 +102,9 @@ yaPresentation._extend(yaPresentation, {
         },
         resetTransition: function(children) {
             yaPresentation._DOMManager.setTransition(children, null);
+        },
+        setAnimationClass: function(div, className) {
+            div.className = div.className.replace(/\s*\byap--ef-.*?(\s|$)\b/, "$1") +" yap--ef-"+ className;
         }
     }
 

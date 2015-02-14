@@ -29,6 +29,7 @@
     <script>
         var div = document.getElementsByClassName("presentation")[0];
         yaPresentation._DOMManager.setInitialStyles(div, div.children);
+        yaPresentation._DOMManager.setAnimationClass(div, "fade");
         setTimeout(function() {
             yaPresentation._moveManager.goToNextSlide(div.children, 1000);
         }, 1000);

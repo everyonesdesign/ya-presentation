@@ -1,22 +1,4 @@
 /*
-*    BASIC
-*/
-
-.yap--toIn {
-    margin-left: 100%;
-}
-.yap--in {
-    margin-left: 0;
-}
-.yap--toOut {
-    margin-left: 0;
-    z-index: 1;
-}
-.yap--out {
-    margin-left: -100%;
-}
-
-/*
 *    FADE
 */
 
@@ -47,6 +29,23 @@
 }
 .yap--ef-slide .yap--out {
     margin-left: -100%;
+}
+
+/*
+*    VERTICAL
+*/
+
+.yap--ef-slide .yap--toIn {
+    margin-top: -100%;
+}
+.yap--ef-slide .yap--in {
+    margin-top: 0;
+}
+.yap--ef-slide .yap--toOut {
+    margin-top: 0;
+}
+.yap--ef-slide .yap--out {
+    margin-top: 100%;
 }
 
 
