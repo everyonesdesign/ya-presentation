@@ -1,0 +1,54 @@
+/*
+*    BASIC
+*/
+
+.yap--toIn {
+    margin-left: 100%;
+}
+.yap--in {
+    margin-left: 0;
+}
+.yap--toOut {
+    margin-left: 0;
+    z-index: 1;
+}
+.yap--out {
+    margin-left: -100%;
+}
+
+/*
+*    FADE
+*/
+
+.yap--fade .yap--toIn {
+}
+.yap--fade .yap--in {
+}
+.yap--fade .yap--toOut {
+    opacity: 1;
+    z-index: 1;
+}
+.yap--fade .yap--out {
+    opacity: 0;
+}
+
+/*
+*    SLIDE
+*/
+
+.yap--toIn {
+    margin-left: 100%;
+}
+.yap--in {
+    margin-left: 0;
+}
+.yap--toOut {
+    margin-left: 0;
+    z-index: 1;
+}
+.yap--out {
+    margin-left: -100%;
+}
+
+
+

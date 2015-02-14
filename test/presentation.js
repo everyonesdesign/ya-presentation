@@ -94,7 +94,7 @@ describe("DOM Manager", function () {
     it("should be able to add CSS classes (begin moves)", function(done) {
         var div = document.getElementsByClassName("presentation")[0];
         yaPresentation._DOMManager.setInitialStyles(div, div.children);
-        yaPresentation._DOMManager.makeMove(div.children[0], div.children[1]);
+        yaPresentation._DOMManager.makeMove(div.children[0], div.children[1], 500);
         expect(div.children[0].className).toMatch(/yap--toOut/);
         expect(div.children[1].className).toMatch(/yap--toIn/);
         setTimeout(function() {
@@ -106,7 +106,7 @@ describe("DOM Manager", function () {
 
     it("should be able to remove CSS classes (finish moves)", function(done) {
         var div = bootstrapPresentation();
-        yaPresentation._DOMManager.makeMove(div.children[0], div.children[1]);
+        yaPresentation._DOMManager.makeMove(div.children[0], div.children[1], 500);
 
         setTimeout(function() {
             expect(div.children[0].className).not.toMatch(/yap--toOut/);
@@ -136,7 +136,7 @@ describe("Go to slide", function() {
 
     it("should be able to go prev", function(done) {
         var div = bootstrapPresentation();
-        yaPresentation._moveManager.goToPrevSlide(div.children);
+        yaPresentation._moveManager.goToPrevSlide(div.children, 500);
         setTimeout(function() {
             expect(div.children[2].style.visibility).toEqual("");
             expect(div.children[0].style.visibility).toEqual("hidden");
@@ -146,7 +146,7 @@ describe("Go to slide", function() {
 
     it("should be able to go next", function(done) {
         var div = bootstrapPresentation();
-        yaPresentation._moveManager.goToNextSlide(div.children);
+        yaPresentation._moveManager.goToNextSlide(div.children, 500);
         setTimeout(function() {
             expect(div.children[1].style.visibility).toEqual("");
             expect(div.children[0].style.visibility).toEqual("hidden");
@@ -156,7 +156,7 @@ describe("Go to slide", function() {
 
     it("should be able to go to slide by index", function(done) {
         var div = bootstrapPresentation();
-        yaPresentation._moveManager.goToSlide(div.children, 2);
+        yaPresentation._moveManager.goToSlide(div.children, 2, 500);
         setTimeout(function() {
             expect(div.children[2].style.visibility).toEqual("");
             expect(div.children[0].style.visibility).toEqual("hidden");
