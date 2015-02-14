@@ -40,20 +40,6 @@ yaPresentation._extend(yaPresentation, {
         }
     },
 
-    _setAnimation: function(children, duration) {
-        var value = duration ? duration+"ms" : "";
-        for (var i=0; i<children.length; i++) {
-            for (var j=0; j<yaPresentation._vendors.length; j++) {
-                children[i].style[yaPresentation._vendors[j]+"transition"] = value;
-            }
-            children[i].style["transition"] = value;
-        }
-    },
-
-    _resetAnimation: function(children) {
-        yaPresentation._setAnimation(children, null);
-    },
-
     _moveManager: {
         goToAdjacentSlide: function(children, next) {
             var active = yaPresentation._getActive(children),
@@ -79,28 +65,43 @@ yaPresentation._extend(yaPresentation, {
             el.style.position = "relative";
             el.style.height = children[0].clientHeight + "px";
             for (var i = 0; i < children.length; i++) {
-                children[i].style.right = 0;
                 children[i].style.top = 0;
                 children[i].style.left = 0;
-                children[i].style.bottom = 0;
+                children[i].style.width = "100%";
+                children[i].style.height = "100%";
                 children[i].style.position = "absolute";
+                children[i].style.boxSizing = "border-box";
+                children[i].style.mozBoxSizing = "border-box";
                 if (i) children[i].style.visibility = "hidden";
             }
         },
         makeMove: function(prev, next) {
-            next.style.visibility = "";
-            next.className += " yap--toIn";
             prev.className += " yap--toOut";
-            //0 timeout to make CSS animations work
+            next.className += " yap--toIn";
+            next.style.visibility = "";
             setTimeout(function() {
-                next.className += " yap--in";
                 prev.className += " yap--out";
+                next.className += " yap--in";
+                yaPresentation._DOMManager.setTransition([prev, next], 500);
             }, 0);
             setTimeout(function() {
                 next.className = next.className.replace(/\s?(yap--toIn|yap--in)/g, "");
                 prev.className = prev.className.replace(/\s?(yap--toOut|yap--out)/g, "");
                 prev.style.visibility = "hidden";
-            }, 500); //TODO: remove this hardcode
+                yaPresentation._DOMManager.resetTransition([prev, next]);
+            }, 500);
+        },
+        setTransition: function(children, duration) {
+            var value = duration ? duration+"ms" : "";
+            for (var i=0; i<children.length; i++) {
+                for (var j=0; j<yaPresentation._vendors.length; j++) {
+                    children[i].style[yaPresentation._vendors[j]+"transition"] = value;
+                }
+                children[i].style["transition"] = value;
+            }
+        },
+        resetTransition: function(children) {
+            yaPresentation._DOMManager.setTransition(children, null);
         }
     }
 

@@ -95,7 +95,6 @@ describe("DOM Manager", function () {
         var div = document.getElementsByClassName("presentation")[0];
         yaPresentation._DOMManager.setInitialStyles(div, div.children);
         yaPresentation._DOMManager.makeMove(div.children[0], div.children[1]);
-
         expect(div.children[0].className).toMatch(/yap--toOut/);
         expect(div.children[1].className).toMatch(/yap--toIn/);
         setTimeout(function() {
@@ -178,14 +177,14 @@ describe("Animation", function () {
 
     it("adds transform to object", function () {
         var div = bootstrapPresentation();
-        yaPresentation._setAnimation(div.children, 200);
+        yaPresentation._DOMManager.setTransition(div.children, 200);
         expect(div.children[0].style.transition).toEqual("200ms");
     });
 
     it("can reset animation", function () {
         var div = bootstrapPresentation();
-        yaPresentation._setAnimation(div.children, 200);
-        yaPresentation._resetAnimation(div.children);
+        yaPresentation._DOMManager.setTransition(div.children, 200);
+        yaPresentation._DOMManager.resetTransition(div.children);
         expect(div.children[0].style.transition).toEqual("");
     });
 
