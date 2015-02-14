@@ -11,6 +11,7 @@ module.exports = function(grunt) {
                   specs: 'test/*.js',
                   outfile: 'test/spec_run.html',
                   styles: 'demo/styles.css',
+                  styles: 'dest/ya-presentation.css',
                   keepRunner: true
               }
           }
