@@ -46,8 +46,9 @@ var yaPresentation = function (el, options) {
 if (typeof jQuery !== "undefined") {
     jQuery.fn.yaPresentation = function(options) {
         this.each(function() {
-            return yaPresentation(this, options);
+            yaPresentation(this, options);
         });
+        return this;
     }
 }
 //extend method

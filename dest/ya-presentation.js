@@ -1,4 +1,3 @@
-//TODO: make a function to avoid names collisions?
 var yaPresentation = function (el, options) {
 
     //incorrect arg
@@ -46,9 +45,7 @@ var yaPresentation = function (el, options) {
 };
 if (typeof jQuery !== "undefined") {
     jQuery.fn.yaPresentation = function(options) {
-        this.each(function() {
-            return yaPresentation(this, options);
-        });
+        return yaPresentation(this, options);
     }
 }
 //extend method

@@ -43,8 +43,9 @@
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="../dest/ya-presentation.js"></script>
     <script>
-        var div = document.querySelector(".presentation");
-        var presentation = yaPresentation(div);
+        /*var div = document.querySelector(".presentation");
+        var presentation = yaPresentation(div);*/
+        var presentation = $(".presentation").yaPresentation();
         document.querySelector(".ya--control-prev").addEventListener("click", function() {
            presentation.goToPrevSlide();
         });
