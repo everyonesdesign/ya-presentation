@@ -9,7 +9,7 @@ module.exports = function(grunt) {
               src: 'src/ya-presentation.js',
               options: {
                   outfile: 'test/spec_run.html',
-                  specs: 'test/*.js',
+                  specs: 'test/presentation.js',
                   keepRunner: true,
                   vendor: 'test/jquery.min.js',
                   styles: ['demo/styles.css', 'dest/ya-presentation.css'],
