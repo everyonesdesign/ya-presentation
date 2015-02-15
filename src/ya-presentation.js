@@ -12,7 +12,7 @@ var yaPresentation = function (el, options) {
     }
 
     //setting children and options
-    var children = el.children; //TODO: make it more cross-browser
+    var children = el.children;
     var defaults = {
         animation: "fade",
         duration: 500,
