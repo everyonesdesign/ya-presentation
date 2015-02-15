@@ -175,7 +175,7 @@ describe("Animation", function () {
         clearHTML();
     });
 
-    it("adds transform to object", function () {
+    it("adds transition to object", function () {
         var div = bootstrapPresentation();
         yaPresentation._DOMManager.setTransition(div.children, 200);
         expect(div.children[0].style.transition).toEqual("200ms");
@@ -201,6 +201,91 @@ describe("Animation", function () {
         expect(/\byap--ef-slide\b/.test(div.className)).toBe(false);
         expect(/\byap--ef-fade\b/.test(div.className)).toBe(true);
     });
+
+});
+
+describe("Outer API wrap", function() {
+
+    beforeEach(function () {
+        prepareHTML();
+    });
+    afterEach(function () {
+        clearHTML();
+    });
+
+    it("return if there's no element", function() {
+        var div = bootstrapPresentation();
+        expect(yaPresentation()).toEqual(null);
+    });
+
+    it("should return an object", function() {
+        var div = bootstrapPresentation();
+        expect(typeof yaPresentation(div)).toEqual("object");
+    });
+
+
+    it("should be able to set initial styles", function () {
+        var div = document.getElementsByClassName("presentation")[0];
+        yaPresentation(div);
+
+        expect(div.style.overflow).toEqual("hidden");
+        expect(div.clientHeight).toEqual(400);
+
+        expect(div.children[0].style.position).toEqual("absolute");
+        expect(div.children[0].clientWidth).toEqual(800);
+    });
+
+    it("sets animation class", function () {
+        var div = document.getElementsByClassName("presentation")[0];
+        yaPresentation(div, {
+            animation: "slide"
+        });
+        expect(/\byap--ef-fade\b/.test(div.className)).toBe(false);
+        expect(/\byap--ef-slide\b/.test(div.className)).toBe(true);
+    });
+
+    it("adds transition to object", function () {
+        var div = document.getElementsByClassName("presentation")[0];
+        yaPresentation(div, {
+            duration: 700
+        });
+        yaPresentation._DOMManager.setTransition(div.children, 700);
+        expect(div.children[0].style.transition).toEqual("700ms");
+    });
+
+    it("should be able to go prev", function(done) {
+        var div = document.getElementsByClassName("presentation")[0];
+        var presentation = yaPresentation(div);
+        presentation.goToPrevSlide();
+        setTimeout(function() {
+            expect(div.children[2].style.visibility).toEqual("");
+            expect(div.children[0].style.visibility).toEqual("hidden");
+            done();
+        }, 600);
+    });
+
+    it("should be able to go next", function(done) {
+        var div = document.getElementsByClassName("presentation")[0];
+        var presentation = yaPresentation(div);
+        presentation.goToNextSlide();
+        setTimeout(function() {
+            expect(div.children[1].style.visibility).toEqual("");
+            expect(div.children[0].style.visibility).toEqual("hidden");
+            done();
+        }, 600);
+    });
+
+    it("should be able to go to slide by index", function(done) {
+        var div = document.getElementsByClassName("presentation")[0];
+        var presentation = yaPresentation(div);
+        presentation.goToSlide(2);
+        setTimeout(function() {
+            expect(div.children[2].style.visibility).toEqual("");
+            expect(div.children[0].style.visibility).toEqual("hidden");
+            done();
+        }, 600);
+    });
+
 
 });
 

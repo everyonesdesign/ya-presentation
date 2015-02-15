@@ -1,11 +1,30 @@
 //TODO: make a function to avoid names collisions?
 var yaPresentation = function (el, options) {
 
-    var children = el.children; //TODO: make it more cross-browser
-    var defaults = {};
-    var options = yaPresentation._extend(defaults, options);
-    var presentation = {};
+    if (!el) return null;
 
+    var children = el.children; //TODO: make it more cross-browser
+    var defaults = {
+        animation: "fade",
+        duration: 500
+    };
+    var options = yaPresentation._extend(defaults, options);
+
+    yaPresentation._DOMManager.setInitialStyles(el, children);
+    yaPresentation._DOMManager.setAnimationClass(el, options.animation);
+    yaPresentation._DOMManager.setTransition(children, options.duration);
+
+    return { // object to control concrete presentation
+        goToPrevSlide: function() {
+            yaPresentation._moveManager.goToPrevSlide(children, options.duration);
+        },
+        goToNextSlide: function() {
+            yaPresentation._moveManager.goToNextSlide(children, options.duration);
+        },
+        goToSlide: function(index) {
+            yaPresentation._moveManager.goToSlide(children, index, options.duration);
+        }
+    }
 };
 //extend method
 yaPresentation._extend = function (target, source) {
