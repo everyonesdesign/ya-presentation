@@ -134,6 +134,12 @@ describe("DOM Manager", function () {
         }, 600);
     });
 
+    it("adds controls by default", function() {
+        var $div = $(".presentation");
+        $div.yaPresentation();
+        expect($(".ya--control").length).toEqual(2);
+    });
+
 });
 
 describe("Go to slide", function() {
@@ -347,6 +353,14 @@ describe("Outer API wrap", function() {
         expect(div.clientHeight).toEqual(400);
         expect(div.children[0].style.position).toEqual("absolute");
         expect(div.children[0].clientWidth).toEqual(800);
+    });
+
+    it("can remove controls with options", function() {
+        var $div = $(".presentation");
+        $div.yaPresentation({
+            controls: false
+        });
+        expect($(".ya--control").length).toEqual(0);
     });
 
 });

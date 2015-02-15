@@ -15,7 +15,9 @@ var yaPresentation = function (el, options) {
     var children = el.children; //TODO: make it more cross-browser
     var defaults = {
         animation: "fade",
-        duration: 500
+        duration: 500,
+        texts: ["< Пред","След >"],
+        controls: true
     };
     options = yaPresentation._extend(defaults, options);
 
@@ -23,8 +25,7 @@ var yaPresentation = function (el, options) {
     yaPresentation._DOMManager.setInitialStyles(el, children);
     yaPresentation._DOMManager.setAnimationClass(el, options.animation);
 
-    // return an object to control concrete presentation
-    return {
+    var presentation = {
         _options: options,
         _el: el,
         _children: children,
@@ -41,14 +42,31 @@ var yaPresentation = function (el, options) {
         goToSlide: function(index) {
             yaPresentation._moveManager.goToSlide(children, index, this._options.duration);
         }
+    };
+
+    if (options.controls) {
+        var controlButtons = yaPresentation._DOMManager.addControls(el, options.texts);
+        controlButtons[0].addEventListener("click", function() {
+            presentation.goToPrevSlide();
+        });
+        controlButtons[1].addEventListener("click", function() {
+            presentation.goToNextSlide();
+        });
     }
+
+    // return an object to control concrete presentation
+    return presentation;
 };
 if (typeof jQuery !== "undefined") {
     jQuery.fn.yaPresentation = function(options) {
-        this.each(function() {
-            yaPresentation(this, options);
-        });
-        return this;
+        if (this.length == 1) {
+            return yaPresentation(this[0], options);
+        } else {
+            this.each(function() {
+                yaPresentation(this, options);
+            });
+            return this;
+        }
     }
 }
 //extend method
@@ -158,8 +176,19 @@ yaPresentation._extend(yaPresentation, {
         resetTransition: function(children) {
             yaPresentation._DOMManager.setTransition(children, null);
         },
-        setAnimationClass: function(div, className) {
-            div.className = div.className.replace(/\s*\byap--ef-.*?(\s|$)\b/, "$1") +" yap--ef-"+ className;
+        setAnimationClass: function(el, className) {
+            el.className = el.className.replace(/\s*\byap--ef-.*?(\s|$)\b/, "$1") +" yap--ef-"+ className;
+        },
+        addControls: function(el, texts) {
+            var prev = document.createElement('div');
+            prev.className += "ya--control ya--control-prev";
+            if (texts&&texts[0]) prev.innerText = texts[0];
+            var next = document.createElement('div');
+            next.className += "ya--control ya--control-next";
+            if (texts&&texts[1]) next.innerText = texts[1];
+            el.parentNode.insertBefore(prev, el);
+            el.parentNode.insertBefore(next, el);
+            return [prev, next];
         }
     }
 });
