@@ -29,18 +29,37 @@ var yaPresentation = function (el, options) {
         _options: options,
         _el: el,
         _children: children,
+        _inProgress: false,
+        _setInProgress: function() {
+            if (this._inProgress) return false;
+            return this._inProgress = true;
+        },
+        _resetInProgress: function() {
+            var obj = this;
+            setTimeout(function() {
+                obj._inProgress = false;
+            }, obj._options.duration);
+        },
         setOptions: function(options) {
             this.options = yaPresentation._extend(this._options, options);
             yaPresentation._DOMManager.setAnimationClass(this._el, this._options.animation);
         },
         goToPrevSlide: function() {
+            if (!this._setInProgress()) return;
             yaPresentation._moveManager.goToPrevSlide(children, this._options.duration);
+            this._resetInProgress();
         },
         goToNextSlide: function() {
+            if (this._inProgress) return;
+            this._inProgress = true;
             yaPresentation._moveManager.goToNextSlide(children, this._options.duration);
+            this._resetInProgress();
         },
         goToSlide: function(index) {
+            if (this._inProgress) return;
+            this._inProgress = true;
             yaPresentation._moveManager.goToSlide(children, index, this._options.duration);
+            this._resetInProgress();
         }
     };
 
