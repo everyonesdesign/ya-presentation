@@ -11,7 +11,7 @@ module.exports = function(grunt) {
                   outfile: 'test/spec_run.html',
                   specs: 'test/*.js',
                   keepRunner: true,
-                  vendor: 'bower_components/jquery/dist/jquery.min.js',
+                  vendor: 'test/jquery.min.js',
                   styles: ['demo/styles.css', 'dest/ya-presentation.css'],
                   template: require('grunt-template-jasmine-istanbul'),
                   templateOptions: {
