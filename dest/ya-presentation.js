@@ -3,26 +3,41 @@ var yaPresentation = function (el, options) {
 
     if (!el) return null;
 
+    if (yaPresentation._isNodeList(el)) {
+        for (var i=0; i<el.length; i++) {
+            yaPresentation(el[i]);
+        }
+        return null;
+    }
+
     var children = el.children; //TODO: make it more cross-browser
     var defaults = {
         animation: "fade",
         duration: 500
     };
-    var options = yaPresentation._extend(defaults, options);
+    options = yaPresentation._extend(defaults, options);
 
     yaPresentation._DOMManager.setInitialStyles(el, children);
     yaPresentation._DOMManager.setAnimationClass(el, options.animation);
     yaPresentation._DOMManager.setTransition(children, options.duration);
 
     return { // object to control concrete presentation
+        _options: options,
+        _el: el,
+        _children: children,
+        setOptions: function(options) {
+            this.options = yaPresentation._extend(this._options, options);
+            yaPresentation._DOMManager.setAnimationClass(this._el, this._options.animation);
+            yaPresentation._DOMManager.setTransition(this._children, this._options.duration);
+        },
         goToPrevSlide: function() {
-            yaPresentation._moveManager.goToPrevSlide(children, options.duration);
+            yaPresentation._moveManager.goToPrevSlide(children, this._options.duration);
         },
         goToNextSlide: function() {
-            yaPresentation._moveManager.goToNextSlide(children, options.duration);
+            yaPresentation._moveManager.goToNextSlide(children, this._options.duration);
         },
         goToSlide: function(index) {
-            yaPresentation._moveManager.goToSlide(children, index, options.duration);
+            yaPresentation._moveManager.goToSlide(children, index, this._options.duration);
         }
     }
 };
@@ -57,6 +72,11 @@ yaPresentation._extend(yaPresentation, {
                 return i;
             }
         }
+    },
+
+    _isNodeList: function(object) {
+        return (typeof object.length == 'number'
+            && typeof object.item == 'function');
     },
 
     _moveManager: {

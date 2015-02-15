@@ -32,12 +32,29 @@ function clearHTML() {
 
 describe("General methods", function () {
 
+    beforeEach(function() {
+        prepareHTML();
+    });
+    afterEach(function() {
+        clearHTML();
+    });
+
     it("should have working extend internal method", function () {
         expect(yaPresentation._extend({}, {a: 1})).toEqual({a: 1});
     });
 
     it("should be able to execute nested extend", function () {
         expect(yaPresentation._extend({}, {a: {b: 1}})).toEqual({a: {b: 1}});
+    });
+
+    it("should be able to check is object a nodelist", function () {
+        var div = bootstrapPresentation();
+        expect(yaPresentation._isNodeList(div.children)).toBe(true);
+        expect(yaPresentation._isNodeList(div)).toBe(false);
+        expect(yaPresentation._isNodeList({})).toBe(false);
+        expect(yaPresentation._isNodeList([])).toBe(false);
+        expect(yaPresentation._isNodeList(123)).toBe(false);
+        expect(yaPresentation._isNodeList("")).toBe(false);
     });
 
 });
@@ -223,6 +240,19 @@ describe("Outer API wrap", function() {
         expect(typeof yaPresentation(div)).toEqual("object");
     });
 
+    it("should be able to set options", function() {
+        var div = document.getElementsByClassName("presentation")[0];
+        var presentation = yaPresentation(div);
+        presentation.setOptions({
+           duration: 700
+        });
+        expect(div.children[0].style.transition).toEqual("700ms");
+        presentation.setOptions({
+           animation: "slide"
+        });
+        expect(/\byap--ef-fade\b/.test(div.className)).toBe(false);
+        expect(/\byap--ef-slide\b/.test(div.className)).toBe(true);
+    });
 
     it("should be able to set initial styles", function () {
         var div = document.getElementsByClassName("presentation")[0];
@@ -249,7 +279,6 @@ describe("Outer API wrap", function() {
         yaPresentation(div, {
             duration: 700
         });
-        yaPresentation._DOMManager.setTransition(div.children, 700);
         expect(div.children[0].style.transition).toEqual("700ms");
     });
 
@@ -275,15 +304,16 @@ describe("Outer API wrap", function() {
         }, 600);
     });
 
-    it("should be able to go to slide by index", function(done) {
-        var div = document.getElementsByClassName("presentation")[0];
-        var presentation = yaPresentation(div);
-        presentation.goToSlide(2);
-        setTimeout(function() {
-            expect(div.children[2].style.visibility).toEqual("");
-            expect(div.children[0].style.visibility).toEqual("hidden");
-            done();
-        }, 600);
+    it("should be able to set presentation several times on one page", function() {
+        //one more
+        prepareHTML();
+
+        var divs = document.getElementsByClassName("presentation");
+        yaPresentation(divs);
+        expect(divs[0].style.overflow).toEqual("hidden");
+        expect(divs[1].style.overflow).toEqual("hidden");
+        expect(divs[0].clientHeight).toEqual(400);
+        expect(divs[1].clientHeight).toEqual(400);
     });
 
 
