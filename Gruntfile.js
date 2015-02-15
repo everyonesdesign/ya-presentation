@@ -36,6 +36,9 @@ module.exports = function(grunt) {
           }
       },
       uglify: {
+          options: {
+              mangle: true
+          },
           main: {
               files: {
                   'dest/ya-presentation.min.js': ['src/ya-presentation.js']

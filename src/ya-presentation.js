@@ -1,4 +1,3 @@
-//TODO: make a function to avoid names collisions?
 var yaPresentation = function (el, options) {
 
     //incorrect arg
