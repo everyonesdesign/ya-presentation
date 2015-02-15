@@ -1,8 +1,10 @@
 //TODO: make a function to avoid names collisions?
 var yaPresentation = function (el, options) {
 
+    //incorrect arg
     if (!el) return null;
 
+    //nodelist as art
     if (yaPresentation._isNodeList(el)) {
         for (var i=0; i<el.length; i++) {
             yaPresentation(el[i]);
@@ -10,6 +12,7 @@ var yaPresentation = function (el, options) {
         return null;
     }
 
+    //setting children and options
     var children = el.children; //TODO: make it more cross-browser
     var defaults = {
         animation: "fade",
@@ -17,11 +20,13 @@ var yaPresentation = function (el, options) {
     };
     options = yaPresentation._extend(defaults, options);
 
+    //initializing
     yaPresentation._DOMManager.setInitialStyles(el, children);
     yaPresentation._DOMManager.setAnimationClass(el, options.animation);
     yaPresentation._DOMManager.setTransition(children, options.duration);
 
-    return { // object to control concrete presentation
+    // return an object to control concrete presentation
+    return {
         _options: options,
         _el: el,
         _children: children,
