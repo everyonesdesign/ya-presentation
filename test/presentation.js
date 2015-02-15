@@ -181,6 +181,33 @@ describe("Go to slide", function() {
         }, 600);
     });
 
+    it("should add prev class", function() {
+        var div = bootstrapPresentation();
+        yaPresentation._moveManager.goToPrevSlide(div.children, 500);
+        expect(div.children[0].className).toMatch(/yap--prev/);
+        expect(div.children[2].className).toMatch(/yap--prev/);
+    });
+
+    it("should not add prev class on next and goToSlide", function() {
+        var div = bootstrapPresentation();
+        yaPresentation._moveManager.goToNextSlide(div.children, 500);
+        expect(div.children[0].className).not.toMatch(/yap--prev/);
+        expect(div.children[1].className).not.toMatch(/yap--prev/);
+        yaPresentation._moveManager.goToSlide(div.children, 0, 500);
+        expect(div.children[0].className).not.toMatch(/yap--prev/);
+        expect(div.children[1].className).not.toMatch(/yap--prev/);
+    });
+
+    it("should remove prev class", function(done) {
+        var div = bootstrapPresentation();
+        yaPresentation._moveManager.goToPrevSlide(div.children, 500);
+        setTimeout(function() {
+            expect(div.children[0].className).not.toMatch(/yap--prev/);
+            expect(div.children[2].className).not.toMatch(/yap--prev/);
+            done();
+        }, 600);
+    });
+
 });
 
 describe("Animation", function () {
@@ -240,18 +267,22 @@ describe("Outer API wrap", function() {
         expect(typeof yaPresentation(div)).toEqual("object");
     });
 
-    it("should be able to set options", function() {
+    it("should be able to set options", function(done) {
         var div = document.getElementsByClassName("presentation")[0];
         var presentation = yaPresentation(div);
         presentation.setOptions({
            duration: 700
         });
-        expect(div.children[0].style.transition).toEqual("700ms");
-        presentation.setOptions({
-           animation: "slide"
-        });
-        expect(/\byap--ef-fade\b/.test(div.className)).toBe(false);
-        expect(/\byap--ef-slide\b/.test(div.className)).toBe(true);
+        presentation.goToNextSlide();
+        setTimeout(function() {
+            expect(div.children[0].style.transition).toEqual("700ms");
+            presentation.setOptions({
+                animation: "slide"
+            });
+            expect(/\byap--ef-fade\b/.test(div.className)).toBe(false);
+            expect(/\byap--ef-slide\b/.test(div.className)).toBe(true);
+            done();
+        }, 50);
     });
 
     it("should be able to set initial styles", function () {
@@ -272,14 +303,6 @@ describe("Outer API wrap", function() {
         });
         expect(/\byap--ef-fade\b/.test(div.className)).toBe(false);
         expect(/\byap--ef-slide\b/.test(div.className)).toBe(true);
-    });
-
-    it("adds transition to object", function () {
-        var div = document.getElementsByClassName("presentation")[0];
-        yaPresentation(div, {
-            duration: 700
-        });
-        expect(div.children[0].style.transition).toEqual("700ms");
     });
 
     it("should be able to go prev", function(done) {

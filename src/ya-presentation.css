@@ -30,22 +30,46 @@
 .yap--ef-slide .yap--out {
     margin-left: -100%;
 }
+.yap--ef-slide .yap--toIn.yap--prev {
+    margin-left: -100%;
+}
+.yap--ef-slide .yap--in.yap--prev {
+    margin-left: 0;
+}
+.yap--ef-slide .yap--toOut.yap--prev {
+    margin-left: 0;
+}
+.yap--ef-slide .yap--out.yap--prev {
+    margin-left: 100%;
+}
 
 /*
 *    VERTICAL
 */
 
-.yap--ef-slide .yap--toIn {
+.yap--ef-vertical .yap--toIn {
     margin-top: -100%;
 }
-.yap--ef-slide .yap--in {
+.yap--ef-vertical .yap--in {
     margin-top: 0;
 }
-.yap--ef-slide .yap--toOut {
+.yap--ef-vertical .yap--toOut {
     margin-top: 0;
 }
-.yap--ef-slide .yap--out {
+.yap--ef-vertical .yap--out {
     margin-top: 100%;
+}
+.yap--ef-vertical .yap--toIn.yap--prev {
+    margin-top: 100%;
+}
+.yap--ef-vertical .yap--in.yap--prev {
+    margin-top: 0;
+}
+.yap--ef-vertical .yap--toOut.yap--prev {
+    margin-top: 0;
+}
+.yap--ef-vertical .yap--out.yap--prev {
+    margin-top: -100%;
 }
 
 

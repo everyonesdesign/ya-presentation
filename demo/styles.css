@@ -3,6 +3,7 @@
 */
 
 .container {
+    position: relative;
     width: 800px;
     margin: 60px auto;
 }
@@ -20,6 +21,21 @@
 .presentation-item h5,
 .presentation-item h6 {
     text-align: center;
+}
+
+.ya--control {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top: 190px;
+    padding: 10px;
+    background: rgba(0,0,0,.5);
+    color: #fff;
+    cursor: pointer;
+}
+.ya--control-next {
+    left: auto;
+    right: 0;
 }
 
 /*

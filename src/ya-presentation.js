@@ -23,7 +23,6 @@ var yaPresentation = function (el, options) {
     //initializing
     yaPresentation._DOMManager.setInitialStyles(el, children);
     yaPresentation._DOMManager.setAnimationClass(el, options.animation);
-    yaPresentation._DOMManager.setTransition(children, options.duration);
 
     // return an object to control concrete presentation
     return {
@@ -33,7 +32,6 @@ var yaPresentation = function (el, options) {
         setOptions: function(options) {
             this.options = yaPresentation._extend(this._options, options);
             yaPresentation._DOMManager.setAnimationClass(this._el, this._options.animation);
-            yaPresentation._DOMManager.setTransition(this._children, this._options.duration);
         },
         goToPrevSlide: function() {
             yaPresentation._moveManager.goToPrevSlide(children, this._options.duration);
@@ -77,6 +75,7 @@ yaPresentation._extend(yaPresentation, {
                 return i;
             }
         }
+        return 0;
     },
 
     _isNodeList: function(object) {
@@ -85,21 +84,21 @@ yaPresentation._extend(yaPresentation, {
     },
 
     _moveManager: {
-        goToAdjacentSlide: function(children, next, duration) {
+        goToAdjacentSlide: function(children, isPrev, duration) {
             var active = yaPresentation._getActive(children),
-                method = next ? "_next" : "_prev";
+                method = isPrev ? "_prev" : "_next";
             next = yaPresentation[method](active, children.length);
-            yaPresentation._DOMManager.makeMove(children[active], children[next], duration);
+            yaPresentation._DOMManager.makeMove(children[active], children[next], duration, isPrev);
         },
         goToSlide: function(children, index, duration) {
             var active = yaPresentation._getActive(children);
             yaPresentation._DOMManager.makeMove(children[active], children[index], duration);
         },
         goToPrevSlide: function(children, duration) {
-            yaPresentation._moveManager.goToAdjacentSlide(children, false, duration);
+            yaPresentation._moveManager.goToAdjacentSlide(children, true, duration);
         },
         goToNextSlide: function(children, duration) {
-            yaPresentation._moveManager.goToAdjacentSlide(children, true, duration);
+            yaPresentation._moveManager.goToAdjacentSlide(children, false, duration);
         }
     },
 
@@ -119,9 +118,14 @@ yaPresentation._extend(yaPresentation, {
                 if (i) children[i].style.visibility = "hidden";
             }
         },
-        makeMove: function(prev, next, duration) {
+        makeMove: function(prev, next, duration, isPrev) {
+            isPrev = !!isPrev;
             prev.className += " yap--toOut";
             next.className += " yap--toIn";
+            if (isPrev) {
+                prev.className += " yap--prev";
+                next.className += " yap--prev";
+            }
             next.style.visibility = "";
             setTimeout(function() {
                 prev.className += " yap--out";
@@ -129,8 +133,8 @@ yaPresentation._extend(yaPresentation, {
                 yaPresentation._DOMManager.setTransition([prev, next], duration);
             }, 0);
             setTimeout(function() {
-                next.className = next.className.replace(/\s?(yap--toIn|yap--in)/g, "");
-                prev.className = prev.className.replace(/\s?(yap--toOut|yap--out)/g, "");
+                next.className = next.className.replace(/\s?(yap--toIn|yap--in|yap--prev)/g, "");
+                prev.className = prev.className.replace(/\s?(yap--toOut|yap--out|yap--prev)/g, "");
                 prev.style.visibility = "hidden";
                 yaPresentation._DOMManager.resetTransition([prev, next]);
             }, duration);

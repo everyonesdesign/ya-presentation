@@ -12,6 +12,7 @@
 <body>
 
     <div class="container">
+        <div class="ya--control ya--control-prev">< Пред.</div>
         <div class="presentation">
             <div class="presentation-item">
                 <h1>Hello, world1!</h1>
@@ -23,16 +24,43 @@
                 <h1>Hello, world3!</h1>
             </div>
         </div>
+        <div class="ya--control ya--control-next">След. ></div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            Animation:
+            <select id="animationSelect">
+                <option value="fade">Fade</option>
+                <option value="slide">Slide</option>
+                <option value="vertical">Vertical</option>
+            </select>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            Animation:
+            <input type="text" id="durationInput" value="500"/>
+        </div>
     </div>
 
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="../dest/ya-presentation.js"></script>
     <script>
-        var div = document.getElementsByClassName("presentation")[0];
-        yaPresentation._DOMManager.setInitialStyles(div, div.children);
-        yaPresentation._DOMManager.setAnimationClass(div, "fade");
-        setTimeout(function() {
-            yaPresentation._moveManager.goToNextSlide(div.children, 1000);
-        }, 1000);
+        var div = document.querySelector(".presentation");
+        var presentation = yaPresentation(div);
+        document.querySelector(".ya--control-prev").addEventListener("click", function() {
+           presentation.goToPrevSlide();
+        });
+        document.querySelector(".ya--control-next").addEventListener("click", function() {
+           presentation.goToNextSlide();
+        });
+        document.querySelector("#animationSelect").addEventListener("change", function() {
+           presentation.setOptions({
+               animation: this.value
+           });
+        });
+        document.querySelector("#durationInput").addEventListener("input", function() {
+           presentation.setOptions({
+               duration: this.value
+           });
+        });
     </script>
 
 </body>

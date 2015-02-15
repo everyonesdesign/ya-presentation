@@ -10,8 +10,7 @@ module.exports = function(grunt) {
               options: {
                   specs: 'test/*.js',
                   outfile: 'test/spec_run.html',
-                  styles: 'demo/styles.css',
-                  styles: 'dest/ya-presentation.css',
+                  styles: ['demo/styles.css', 'dest/ya-presentation.css'],
                   keepRunner: true
               }
           }
