@@ -5,14 +5,24 @@ module.exports = function(grunt) {
   grunt.initConfig({
     builtFolder: 'built',
       jasmine: {
-          pivotal: {
+          coverage: {
               src: 'src/ya-presentation.js',
               options: {
-                  specs: 'test/*.js',
                   outfile: 'test/spec_run.html',
+                  specs: 'test/*.js',
                   vendor: 'bower_components/jquery/dist/jquery.min.js',
                   styles: ['demo/styles.css', 'dest/ya-presentation.css'],
-                  keepRunner: true
+                  template: require('grunt-template-jasmine-istanbul'),
+                  templateOptions: {
+                      coverage: 'test/coverage/coverage.json',
+                      report: 'test/coverage',
+                      thresholds: {
+                          lines: 75,
+                          statements: 75,
+                          branches: 75,
+                          functions: 90
+                      }
+                  }
               }
           }
       },
