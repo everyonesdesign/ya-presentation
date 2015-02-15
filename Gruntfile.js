@@ -10,6 +10,7 @@ module.exports = function(grunt) {
               options: {
                   specs: 'test/*.js',
                   outfile: 'test/spec_run.html',
+                  vendor: 'bower_components/jquery/dist/jquery.min.js',
                   styles: ['demo/styles.css', 'dest/ya-presentation.css'],
                   keepRunner: true
               }

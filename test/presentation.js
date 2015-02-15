@@ -339,6 +339,15 @@ describe("Outer API wrap", function() {
         expect(divs[1].clientHeight).toEqual(400);
     });
 
+    it("wraps with jquery container", function() {
+        var $div = $(".presentation");
+        $div.yaPresentation();
+        var div = $div[0];
+        expect(div.style.overflow).toEqual("hidden");
+        expect(div.clientHeight).toEqual(400);
+        expect(div.children[0].style.position).toEqual("absolute");
+        expect(div.children[0].clientWidth).toEqual(800);
+    });
 
 });
 

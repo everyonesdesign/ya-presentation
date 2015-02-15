@@ -44,6 +44,13 @@ var yaPresentation = function (el, options) {
         }
     }
 };
+if (typeof jQuery !== "undefined") {
+    jQuery.fn.yaPresentation = function(options) {
+        this.each(function() {
+            return yaPresentation(this, options);
+        });
+    }
+}
 //extend method
 yaPresentation._extend = function (target, source) {
     target = target || {};
@@ -155,7 +162,6 @@ yaPresentation._extend(yaPresentation, {
             div.className = div.className.replace(/\s*\byap--ef-.*?(\s|$)\b/, "$1") +" yap--ef-"+ className;
         }
     }
-
 });
 
 
