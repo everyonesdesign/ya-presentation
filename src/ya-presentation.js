@@ -200,10 +200,10 @@ yaPresentation._extend(yaPresentation, {
         },
         addControls: function(el, texts) {
             var prev = document.createElement('div');
-            prev.className += "ya--control ya--control-prev";
+            prev.className += "yap--control yap--control-prev";
             if (texts&&texts[0]) prev.innerText = texts[0];
             var next = document.createElement('div');
-            next.className += "ya--control ya--control-next";
+            next.className += "yap--control yap--control-next";
             if (texts&&texts[1]) next.innerText = texts[1];
             el.parentNode.insertBefore(prev, el);
             el.parentNode.insertBefore(next, el);

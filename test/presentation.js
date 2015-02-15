@@ -29,6 +29,13 @@ function clearHTML() {
     document.getElementById("fixture").innerHTML = "";
 }
 
+//function making phantom js to click on elements
+function mouseclick( element ) {
+    var event = document.createEvent( 'MouseEvents' );
+    event.initMouseEvent( 'click', true, true, window, 1, 0, 0 );
+    element.dispatchEvent( event );
+}
+
 
 describe("General methods", function () {
 
@@ -137,7 +144,7 @@ describe("DOM Manager", function () {
     it("adds controls by default", function() {
         var $div = $(".presentation");
         $div.yaPresentation();
-        expect($(".ya--control").length).toEqual(2);
+        expect($(".yap--control").length).toEqual(2);
     });
 
 });
@@ -333,6 +340,17 @@ describe("Outer API wrap", function() {
         }, 600);
     });
 
+    it("should be able to go by index", function(done) {
+        var div = document.getElementsByClassName("presentation")[0];
+        var presentation = yaPresentation(div);
+        presentation.goToSlide(1);
+        setTimeout(function() {
+            expect(div.children[1].style.visibility).toEqual("");
+            expect(div.children[0].style.visibility).toEqual("hidden");
+            done();
+        }, 600);
+    });
+
     it("should be able to set presentation several times on one page", function() {
         //one more
         prepareHTML();
@@ -360,7 +378,31 @@ describe("Outer API wrap", function() {
         $div.yaPresentation({
             controls: false
         });
-        expect($(".ya--control").length).toEqual(0);
+        expect($(".yap--control").length).toEqual(0);
+    });
+
+    it("has working prev control", function(done) {
+        var $div = $(".presentation");
+        var div = $div[0];
+        $div.yaPresentation();
+        mouseclick($(".yap--control-prev")[0]);
+        setTimeout(function() {
+            expect(div.children[2].style.visibility).toEqual("");
+            expect(div.children[0].style.visibility).toEqual("hidden");
+            done();
+        }, 600);
+    });
+
+    it("has working next control", function(done) {
+        var $div = $(".presentation");
+        var div = $div[0];
+        $div.yaPresentation();
+        mouseclick($(".yap--control-next")[0]);
+        setTimeout(function() {
+            expect(div.children[1].style.visibility).toEqual("");
+            expect(div.children[0].style.visibility).toEqual("hidden");
+            done();
+        }, 600);
     });
 
 });

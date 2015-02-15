@@ -23,7 +23,7 @@
     text-align: center;
 }
 
-.ya--control {
+.yap--control {
     position: absolute;
     z-index: 10;
     left: 0;
@@ -33,7 +33,7 @@
     color: #fff;
     cursor: pointer;
 }
-.ya--control-next {
+.yap--control-next {
     left: auto;
     right: 0;
 }
