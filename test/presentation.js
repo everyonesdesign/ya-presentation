@@ -405,5 +405,19 @@ describe("Outer API wrap", function() {
         }, 600);
     });
 
+    it("has working click to next option", function(done) {
+        var $div = $(".presentation");
+        var div = $div[0];
+        $div.yaPresentation({
+            clickToNext: true
+        });
+        mouseclick($(".presentation")[0]);
+        setTimeout(function() {
+            expect(div.children[1].style.visibility).toEqual("");
+            expect(div.children[0].style.visibility).toEqual("hidden");
+            done();
+        }, 600);
+    });
+
 });
 

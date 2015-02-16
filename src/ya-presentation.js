@@ -17,6 +17,7 @@ var yaPresentation = function (el, options) {
         animation: "fade",
         duration: 500,
         texts: ["< Пред","След >"],
+        clickToNext: false,
         controls: true
     };
     options = yaPresentation._extend(defaults, options);
@@ -69,6 +70,12 @@ var yaPresentation = function (el, options) {
             presentation.goToPrevSlide();
         });
         controlButtons[1].addEventListener("click", function() {
+            presentation.goToNextSlide();
+        });
+    }
+
+    if (options.clickToNext) {
+        el.addEventListener("click", function() {
             presentation.goToNextSlide();
         });
     }

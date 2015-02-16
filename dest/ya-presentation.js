@@ -12,11 +12,12 @@ var yaPresentation = function (el, options) {
     }
 
     //setting children and options
-    var children = el.children; //TODO: make it more cross-browser
+    var children = el.children;
     var defaults = {
         animation: "fade",
         duration: 500,
         texts: ["< Пред","След >"],
+        clickToNext: false,
         controls: true
     };
     options = yaPresentation._extend(defaults, options);
@@ -69,6 +70,12 @@ var yaPresentation = function (el, options) {
             presentation.goToPrevSlide();
         });
         controlButtons[1].addEventListener("click", function() {
+            presentation.goToNextSlide();
+        });
+    }
+
+    if (options.clickToNext) {
+        el.addEventListener("click", function() {
             presentation.goToNextSlide();
         });
     }
