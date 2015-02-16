@@ -13,10 +13,20 @@ html, body {
     margin: auto;
 }
 
-.presentation-item {
-    padding: 20px;
+.presentation {
     background: #eee;
+}
+
+.presentation-item {
+    padding: 20px 60px;
     height: 360px;
+    font-size: 22px;
+    background: #eee;
+}
+
+.content {
+    max-width: 800px;
+    margin: auto;
 }
 
 .presentation-item h1,
@@ -64,7 +74,6 @@ html, body {
     bottom: 0;
     height: auto !important;
     font-size: 30px;
-    background: #fff;
 }
 
 /*
