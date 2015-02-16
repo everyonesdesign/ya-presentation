@@ -446,5 +446,16 @@ describe("Outer API wrap", function() {
         expect($(".yap--fullscreenControl").length).toEqual(0);
     });
 
+    it("has toggle fullscreen method", function() {
+        var $div = $(".presentation");
+        var div = $div[0];
+        var presentation = $div.yaPresentation();
+        expect(div.className).not.toMatch(/yap--fullscreen/);
+        presentation.toggleFullscreen();
+        expect(div.className).toMatch(/yap--fullscreen/);
+        presentation.toggleFullscreen();
+        expect(div.className).not.toMatch(/yap--fullscreen/);
+    });
+
 });
 

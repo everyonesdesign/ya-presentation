@@ -68,6 +68,9 @@ var yaPresentation = function (el, options) {
         },
         exitFullscreen: function() {
             yaPresentation._DOMManager.exitFullscreen(el);
+        },
+        toggleFullscreen: function() {
+            yaPresentation._DOMManager.toggleFullscreen(el);
         }
     };
 
@@ -88,7 +91,10 @@ var yaPresentation = function (el, options) {
     }
 
     if (options.fullscreenControl) {
-        yaPresentation._DOMManager.addFullscreenControl(el);
+        var fullscreenControl = yaPresentation._DOMManager.addFullscreenControl(el, options.texts);
+        fullscreenControl.addEventListener("click", function() {
+            presentation.toggleFullscreen();
+        });
     }
 
     // return an object to control concrete presentation
@@ -228,15 +234,24 @@ yaPresentation._extend(yaPresentation, {
             return [prev, next];
         },
         goFullscreen: function(el) {
-            el.className += "yap--fullscreen";
+            el.className += " yap--fullscreen";
         },
         exitFullscreen: function(el) {
             el.className = el.className.replace(/yap--fullscreen/g, "");
         },
-        addFullscreenControl: function(el) {
+        toggleFullscreen: function(el) {
+            if (!/\byap--fullscreen\b/.test(el.className)) {
+                yaPresentation._DOMManager.goFullscreen(el);
+            } else {
+                yaPresentation._DOMManager.exitFullscreen(el);
+            }
+        },
+        addFullscreenControl: function(el, texts) {
             var control = document.createElement('div');
             control.className += "yap--fullscreenControl";
+            if (texts&&texts[2]) control.innerText = texts[2];
             el.parentNode.insertBefore(control, el);
+            return control;
         }
     }
 });

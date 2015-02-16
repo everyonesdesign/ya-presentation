@@ -43,7 +43,9 @@
     <script>
         /*var div = document.querySelector(".presentation");
         var presentation = yaPresentation(div);*/
-        var presentation = $(".presentation").yaPresentation();
+        var presentation = $(".presentation").yaPresentation({
+            fullscreenControl: true
+        });
         document.querySelector("#animationSelect").addEventListener("change", function() {
            presentation.setOptions({
                animation: this.value
