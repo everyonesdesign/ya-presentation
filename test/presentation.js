@@ -141,10 +141,10 @@ describe("DOM Manager", function () {
         }, 600);
     });
 
-    it("adds controls by default", function() {
+    it("dont add controls by default", function() {
         var $div = $(".presentation");
         $div.yaPresentation();
-        expect($(".yap--control").length).toEqual(2);
+        expect($(".yap--control").length).toEqual(0);
     });
 
 });
@@ -384,7 +384,7 @@ describe("Outer API wrap", function() {
     it("has working prev control", function(done) {
         var $div = $(".presentation");
         var div = $div[0];
-        $div.yaPresentation();
+        $div.yaPresentation({controls: true});
         mouseclick($(".yap--control-prev")[0]);
         setTimeout(function() {
             expect(div.children[2].style.visibility).toEqual("");
@@ -396,7 +396,7 @@ describe("Outer API wrap", function() {
     it("has working next control", function(done) {
         var $div = $(".presentation");
         var div = $div[0];
-        $div.yaPresentation();
+        $div.yaPresentation({controls: true});
         mouseclick($(".yap--control-next")[0]);
         setTimeout(function() {
             expect(div.children[1].style.visibility).toEqual("");
@@ -417,6 +417,33 @@ describe("Outer API wrap", function() {
             expect(div.children[0].style.visibility).toEqual("hidden");
             done();
         }, 600);
+    });
+
+    it("has full screen method", function() {
+        var $div = $(".presentation");
+        var div = $div[0];
+        var presentation = $div.yaPresentation();
+        expect(div.className).not.toMatch(/yap--fullscreen/);
+        presentation.goFullscreen();
+        expect(div.className).toMatch(/yap--fullscreen/);
+        presentation.exitFullscreen();
+        expect(div.className).not.toMatch(/yap--fullscreen/);
+    });
+
+    it("adds full screen control", function() {
+        var $div = $(".presentation");
+        var div = $div[0];
+        var presentation = $div.yaPresentation({
+            fullscreenControl: true
+        });
+        expect($(".yap--fullscreenControl").length).toEqual(1);
+    });
+
+    it("inits without fullscreen control by default", function() {
+        var $div = $(".presentation");
+        var div = $div[0];
+        var presentation = $div.yaPresentation();
+        expect($(".yap--fullscreenControl").length).toEqual(0);
     });
 
 });

@@ -16,9 +16,10 @@ var yaPresentation = function (el, options) {
     var defaults = {
         animation: "fade",
         duration: 500,
-        texts: ["< Пред","След >"],
-        clickToNext: false,
-        controls: true
+        texts: ["< Пред","След >", "На весь экран"],
+        clickToNext: true,
+        controls: false,
+        fullscreenControl: false
     };
     options = yaPresentation._extend(defaults, options);
 
@@ -61,6 +62,12 @@ var yaPresentation = function (el, options) {
             this._inProgress = true;
             yaPresentation._moveManager.goToSlide(children, index, this._options.duration);
             this._resetInProgress();
+        },
+        goFullscreen: function() {
+            yaPresentation._DOMManager.goFullscreen(el);
+        },
+        exitFullscreen: function() {
+            yaPresentation._DOMManager.exitFullscreen(el);
         }
     };
 
@@ -78,6 +85,10 @@ var yaPresentation = function (el, options) {
         el.addEventListener("click", function() {
             presentation.goToNextSlide();
         });
+    }
+
+    if (options.fullscreenControl) {
+        yaPresentation._DOMManager.addFullscreenControl(el);
     }
 
     // return an object to control concrete presentation
@@ -215,6 +226,17 @@ yaPresentation._extend(yaPresentation, {
             el.parentNode.insertBefore(prev, el);
             el.parentNode.insertBefore(next, el);
             return [prev, next];
+        },
+        goFullscreen: function(el) {
+            el.className += "yap--fullscreen";
+        },
+        exitFullscreen: function(el) {
+            el.className = el.className.replace(/yap--fullscreen/g, "");
+        },
+        addFullscreenControl: function(el) {
+            var control = document.createElement('div');
+            control.className += "yap--fullscreenControl";
+            el.parentNode.insertBefore(control, el);
         }
     }
 });
