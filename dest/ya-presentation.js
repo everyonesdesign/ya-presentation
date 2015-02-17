@@ -220,7 +220,7 @@ yaPresentation._extend(yaPresentation, {
             yaPresentation._DOMManager.setTransition(children, null);
         },
         setAnimationClass: function(el, className) {
-            el.className = el.className.replace(/\s*\byap--ef-.*?(\s|$)\b/, "$1") +" yap--ef-"+ className;
+            el.className = el.className.replace(/\s*\byap--ef-\w+\b/g, "$1") +" yap--ef-"+ className;
         },
         addControls: function(el, texts) {
             var prev = document.createElement('div');

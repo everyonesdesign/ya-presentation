@@ -7,10 +7,14 @@ html, body {
 }
 
 .container {
-    position: relative;
     width: 800px;
     padding: 60px 0;
     margin: auto;
+}
+
+.item {
+    position: relative;
+    margin-bottom: 60px;
 }
 
 .presentation {
@@ -44,6 +48,7 @@ html, body {
     left: 0;
     top: 190px;
     padding: 10px;
+    font-size: 12px;;
     background: rgba(0,0,0,.5);
     color: #fff;
     cursor: pointer;
@@ -54,13 +59,11 @@ html, body {
 }
 .yap--fullscreenControl {
     position: absolute;
-    z-index: 50;
+    z-index: 101;
     top: 0;
-    text-align: center;
-    width: 180px;
-    margin-left: -85px;
-    left: 50%;
+    right: 0;
     padding: 10px;
+    font-size: 12px;;
     background: rgba(0,0,0,.5);
     color: #fff;
     cursor: pointer;
@@ -68,6 +71,7 @@ html, body {
 
 .yap--fullscreen {
     position: fixed !important;
+    z-index: 100;
     left: 0;
     top: 0;
     right: 0;
@@ -85,6 +89,21 @@ html, body {
 }
 .presentation-item + .presentation-item + .presentation-item {
     background: #aaffaa;
+}
+
+.settings {
+    position: absolute;
+    z-index: 50;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    font-size: 12px;
+    background: rgba(0,0,0,.5);
+    color: #fff;
+}
+.settings input,
+.settings select {
+    color: #222;
 }
 
 
