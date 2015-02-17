@@ -151,6 +151,15 @@ yaPresentation._extend(yaPresentation, {
             && typeof object.item == 'function');
     },
 
+    _insertAfter: function(newElement,targetElement) {
+        var parent = targetElement.parentNode;
+        if(parent.lastchild == targetElement) {
+            parent.appendChild(newElement);
+        } else {
+            parent.insertBefore(newElement, targetElement.nextSibling);
+        }
+    },
+
     _moveManager: {
         goToAdjacentSlide: function(children, isPrev, duration) {
             var active = yaPresentation._getActive(children),
@@ -220,7 +229,7 @@ yaPresentation._extend(yaPresentation, {
             yaPresentation._DOMManager.setTransition(children, null);
         },
         setAnimationClass: function(el, className) {
-            el.className = el.className.replace(/\s*\byap--ef-\w+\b/g, "$1") +" yap--ef-"+ className;
+            el.className = el.className.replace(/\s*\byap--ef-\w+\b/g, "") +" yap--ef-"+ className;
         },
         addControls: function(el, texts) {
             var prev = document.createElement('div');
@@ -229,8 +238,8 @@ yaPresentation._extend(yaPresentation, {
             var next = document.createElement('div');
             next.className += "yap--control yap--control-next";
             if (texts&&texts[1]) next.innerText = texts[1];
-            el.parentNode.insertBefore(prev, el);
-            el.parentNode.insertBefore(next, el);
+            yaPresentation._insertAfter(prev, el);
+            yaPresentation._insertAfter(next, el);
             return [prev, next];
         },
         goFullscreen: function(el) {
@@ -250,7 +259,7 @@ yaPresentation._extend(yaPresentation, {
             var control = document.createElement('div');
             control.className += "yap--fullscreenControl";
             if (texts&&texts[2]) control.innerText = texts[2];
-            el.parentNode.insertBefore(control, el);
+            yaPresentation._insertAfter(control, el);
             return control;
         }
     }

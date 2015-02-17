@@ -53,10 +53,12 @@ html, body {
     color: #fff;
     cursor: pointer;
 }
+
 .yap--control-next {
     left: auto;
     right: 0;
 }
+
 .yap--fullscreenControl {
     position: absolute;
     z-index: 101;
@@ -78,6 +80,12 @@ html, body {
     bottom: 0;
     height: auto !important;
     font-size: 30px;
+}
+
+.yap--fullscreen + .yap--fullscreenControl {
+    position: fixed;
+    right: 0;
+    top: 0;
 }
 
 /*
