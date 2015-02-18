@@ -186,6 +186,26 @@ yaPresentation._extend(yaPresentation, {
         else if (e.keyCode == 27) document.yaPresentation.exitFullscreen();
     },
 
+    _requestFullscreenAPI: function(element) {
+        if (document.body.requestFullscreen) {
+            document.body.requestFullscreen();
+        } else if (document.body.mozRequestFullScreen) {
+            document.body.mozRequestFullScreen();
+        } else if (document.body.webkitRequestFullscreen) {
+            document.body.webkitRequestFullscreen();
+        }
+    },
+
+    _cancelFullscreenAPI: function() {
+        if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        }
+    },
+
     _moveManager: {
         goToAdjacentSlide: function(children, isPrev, duration) {
             var active = yaPresentation._getActive(children),
@@ -270,9 +290,11 @@ yaPresentation._extend(yaPresentation, {
         },
         goFullscreen: function(el) {
             el.className += " yap--fullscreen";
+            yaPresentation._requestFullscreenAPI(el);
         },
         exitFullscreen: function(el) {
             el.className = el.className.replace(/yap--fullscreen/g, "");
+            yaPresentation._cancelFullscreenAPI();
         },
         toggleFullscreen: function(el) {
             if (!/\byap--fullscreen\b/.test(el.className)) {
