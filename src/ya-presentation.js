@@ -66,27 +66,21 @@ var yaPresentation = function (el, options) {
             this._resetInProgress();
         },
         goFullscreen: function() {
-            document.addEventListener("keydown", keyBoardNav);
+            yaPresentation._addKeyboardListener(presentation);
             yaPresentation._DOMManager.goFullscreen(el);
         },
         exitFullscreen: function() {
-            document.removeEventListener("keydown", keyBoardNav);
+            yaPresentation._removeKeyboardListener();
             yaPresentation._DOMManager.exitFullscreen(el);
         },
         toggleFullscreen: function() {
             if (yaPresentation._DOMManager.toggleFullscreen(el)) {
-                document.addEventListener("keydown", keyBoardNav);
+                yaPresentation._addKeyboardListener(presentation);
             } else {
-                document.removeEventListener("keydown", keyBoardNav);
+                yaPresentation._removeKeyboardListener();
             }
         }
     };
-
-    function keyBoardNav(e) {
-        if (e.keyCode == 37) presentation.goToPrevSlide();
-        else if (e.keyCode == 39) presentation.goToNextSlide();
-        else if (e.keyCode == 27) presentation.exitFullscreen();
-    }
 
     if (options.controls) {
         var controlButtons = yaPresentation._DOMManager.addControls(el, options.texts);
@@ -173,6 +167,23 @@ yaPresentation._extend(yaPresentation, {
         } else {
             parent.insertBefore(newElement, targetElement.nextSibling);
         }
+    },
+
+    _addKeyboardListener: function(presentation) {
+        document.addEventListener("keydown", yaPresentation._keyBoardNav);
+        document.yaPresentation = presentation;
+    },
+
+    _removeKeyboardListener: function() {
+        document.removeEventListener("keydown", yaPresentation._keyBoardNav);
+        document.yaPresentation = null;
+    },
+
+    _keyBoardNav: function(e) {
+        if (!document.yaPresentation) return;
+        if (e.keyCode == 37) document.yaPresentation.goToPrevSlide();
+        else if (e.keyCode == 39) document.yaPresentation.goToNextSlide();
+        else if (e.keyCode == 27) document.yaPresentation.exitFullscreen();
     },
 
     _moveManager: {
