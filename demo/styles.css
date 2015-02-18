@@ -179,6 +179,10 @@ button {
     width: 180px;
 }
 
+.settings-item + .settings-item {
+    margin-top: 10px;
+}
+
 .settings input,
 .settings select {
     width: 80px;
@@ -186,6 +190,10 @@ button {
     outline: none;
     border: none;
     background: #fff;
+}
+.settings input {
+    width: 60px;
+    padding: 0 10px;
 }
 
 

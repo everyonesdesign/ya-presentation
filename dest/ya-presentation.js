@@ -186,7 +186,7 @@ yaPresentation._extend(yaPresentation, {
         else if (e.keyCode == 27) document.yaPresentation.exitFullscreen();
     },
 
-    _requestFullscreenAPI: function(element) {
+    _requestFullscreenAPI: function() {
         if (document.body.requestFullscreen) {
             document.body.requestFullscreen();
         } else if (document.body.mozRequestFullScreen) {
