@@ -466,3 +466,68 @@ describe("Outer API wrap", function() {
 
 });
 
+describe("keyboard navigation", function() {
+
+    beforeEach(function () {
+        prepareHTML();
+    });
+    afterEach(function () {
+        clearHTML();
+    });
+
+    var cached = yaPresentation._keyBoardNav.bind(this);
+
+    it("should add listener to document and attach presentation", function() {
+        var result;
+        yaPresentation._keyBoardNav = function() {
+            result = 1;
+        };
+        yaPresentation._addKeyboardListener("Presentation object");
+        yaPresentation._removeKeyboardListener();
+        expect(document.yaPresentation).not.toEqual("Presentation object")
+        var event = document.createEvent('Event');
+        event.initEvent('keydown');
+        document.dispatchEvent(event);
+        expect(result).not.toEqual(1);
+    });
+
+    it("should remove listener to document and detach presentation", function() {
+        var result;
+        yaPresentation._keyBoardNav = function() {
+            result = 1;
+        };
+        yaPresentation._addKeyboardListener("Presentation object");
+        yaPresentation._removeKeyboardListener();
+        expect(document.yaPresentation).not.toEqual("Presentation object")
+        var event = document.createEvent('Event');
+        event.initEvent('keydown');
+        document.dispatchEvent(event);
+        expect(result).not.toEqual(1);
+    });
+
+
+    /*
+    DON'T PUT ANY TESTS HERE!!!
+     */
+
+    it("has correct reactions for key codes", function() {
+        var result;
+        //giving back original value
+        yaPresentation._keyBoardNav = cached.bind(this);
+        document.yaPresentation = {
+            goToPrevSlide: function() {result=0;},
+            goToNextSlide: function() {result=1},
+            exitFullscreen: function() {result=2}
+        };
+        yaPresentation._keyBoardNav(123);
+        expect(result).toEqual(undefined);
+        yaPresentation._keyBoardNav({keyCode: 37});
+        expect(result).toEqual(0);
+        yaPresentation._keyBoardNav({keyCode: 39});
+        expect(result).toEqual(1);
+        yaPresentation._keyBoardNav({keyCode: 27});
+        expect(result).toEqual(2);
+    });
+
+});
+
