@@ -8,86 +8,168 @@
     <link rel="stylesheet" href="styles.css"/>
     <link rel="stylesheet" href="../dest/ya-presentation.css"/>
 
+    <link href='http://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <div class="item">
-            <div class="presentation">
-                <div class="presentation-item">
-                    <div class="content">
-                        <h1>Hello, world1!</h1>
-                        <p>It's a slide example</p>
-                        <ul>
-                            <li>Apple</li>
-                            <li>Orange</li>
-                            <li>Pineapple</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="presentation-item">
-                    <div class="content">
-                        <h1>Hello, world2!</h1>
-                        <p>It's a slide example</p>
-                        <ul>
-                            <li>Apple</li>
-                            <li>Orange</li>
-                            <li>Pineapple</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="presentation-item">
-                    <div class="content">
-                        <h1>Hello, world3!</h1>
-                        <p>It's a slide example</p>
-                        <ul>
-                            <li>Apple</li>
-                            <li>Orange</li>
-                            <li>Pineapple</li>
-                        </ul>
-                    </div>
+    <h1 class="page-title">Yet-another presentation</h1>
+    <div class="page-subtitle"><a href="https://github.com/everyonesdesign/ya-presentation">Код на Github</a></div>
+
+    <div class="item">
+        <div class="presentation" id="presentation1">
+            <div class="presentation-item">
+                <div class="content">
+                    <h1>Кликни по мне!</h1>
+                    <p>Это демонстрация плагина презентации Ya-presentation.</p>
+                    <p>По умолчанию презентация перелистывается по клику на слайд: попробуйте!..</p>
                 </div>
             </div>
-
-            <div class="settings">
-                <div class="settings-item">
-                    Вид анимации:
-                    <select id="animationSelect">
-                        <option value="fade">Fade</option>
-                        <option value="slide">Slide</option>
-                        <option value="vertical">Vertical</option>
-                    </select>
-                </div>
-                <div style="text-align: center; margin-top: 20px;">
-                    Продолжительность (мс):
-                    <input type="text" id="durationInput" value="500"/>
+            <div class="presentation-item">
+                <div class="content">
+                    <h1>Fade... второй слайд!</h1>
+                    <p>
+                        "Yet another presentation" - это JavaScript-плагин для демонстрации презентаций с поддержкой jQuery.
+                        Этот плагин может использоваться в vanilla-форме <code>yaPresentation(DOMel, options)</code>,
+                        либо <code>$(el).yaPresentation(options)</code>.
+                    </p>
+                    <p>
+                        Для работы плагина не нужны зависимости; jQuery-запуск является лишь оберткой для функций плагина.
+                    </p>
+                    <p>
+                        Для продолжения кликните еще раз...
+                    </p>
                 </div>
             </div>
-
+            <div class="presentation-item">
+                <div class="content">
+                    <h1>Особенности кода</h1>
+                    <p>
+                        Репозиторий проекта <a href="https://github.com/everyonesdesign/ya-presentation">размещен на Github</a>,
+                        при разработке были использованы следующие технологии:
+                    </p>
+                    <ul>
+                        <li>Grunt</li>
+                        <li>Jasmine</li>
+                        <li>Travis CI</li>
+                    </ul>
+                    <p>
+                        Проект совместим с IE9+, JavaScript-код покрыт тестами
+                        <a href="https://travis-ci.org/everyonesdesign/ya-presentation" target="_blank">более чем на 90%</a>.
+                        В сжатом виде JS-файл занимает 6кб.
+                    </p>
+                </div>
+            </div>
         </div>
 
     </div>
 
-    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="../dest/ya-presentation.js"></script>
-    <script>
-        /*var div = document.querySelector(".presentation");
-        var presentation = yaPresentation(div);*/
-        var presentation = $(".presentation").yaPresentation({
-            fullscreenControl: true
+    <div class="item">
+
+        <div class="presentation" id="presentation2">
+            <div class="presentation-item">
+                <div class="content">
+                    <h1>Fullscreen</h1>
+                    <p>Этот экземпляр инициализирован с добавлением кнопки fullscreen и стрелками навигации.</p>
+                    <p>Навигация по клику на слайд отключена.</p>
+                    <p>Код инициализации плагина можно посмотреть в исходном коде страницы, внизу.</p>
+                </div>
+            </div>
+            <div class="presentation-item">
+                <div class="content">
+                    <h1>Слайд номер два</h1>
+                    <p>Также в полноэкранный режим можно перейти с помощью внешнего метода:
+                        <button onclick="presentation2.toggleFullscreen()">Go HD!</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="item">
+
+        <div class="presentation" id="presentation3">
+            <div class="presentation-item">
+                <div class="content">
+                    <h1>Подкрутить на лету?.. Легко!</h1>
+                    <p>В этой презентации добавлен блок настроек, взаимодействующий со слайдером через внешние методы.</p>
+                </div>
+            </div>
+            <div class="presentation-item">
+                <div class="content">
+                    <h1>Второй слайд</h1>
+                    <p>Для проверки характеристик анимаций.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings">
+            <div class="settings-item">
+                <span class="settings-text">Вид анимации:</span>
+                <select id="animationSelect">
+                    <option value="fade">Fade</option>
+                    <option value="slide">Slide</option>
+                    <option value="vertical">Vertical</option>
+                </select>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <span class="settings-text">Продолжительность (мс):</span>
+                <input type="text" id="durationInput" value="500"/>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../dest/ya-presentation.js"></script>
+<script>
+
+    $(".content a, .content button").click(function(e) {
+        e.stopPropagation();
+    });
+
+    /*
+    *
+    * SLIDER INITIALIZATION
+    *
+     */
+
+    //ITEM1: default
+    var presentation1 = $("#presentation1").yaPresentation();
+
+    //ITEM2: controls + fullscreen
+    var presentation2 = $("#presentation2").yaPresentation({
+        fullscreenControl: true,
+        controls: true,
+        clickToNext: false,
+        animation: "vertical",
+        texts: ["<", ">", "На весь экран"]
+    });
+
+    //ITEM3: settings
+    var presentation3 = $("#presentation3").yaPresentation({
+        fullscreenControl: true,
+        controls: true,
+        clickToNext: false,
+        texts: ["<", ">", "На весь экран"]
+    });
+    $("#animationSelect").on("change", function () {
+        presentation3.setOptions({
+            animation: this.value
         });
-        document.querySelector("#animationSelect").addEventListener("change", function() {
-           presentation.setOptions({
-               animation: this.value
-           });
+    });
+    $("#durationInput").on("input", function () {
+        presentation3.setOptions({
+            duration: this.value
         });
-        document.querySelector("#durationInput").addEventListener("input", function() {
-           presentation.setOptions({
-               duration: this.value
-           });
-        });
-    </script>
+    });
+
+</script>
 
 </body>
 </html>

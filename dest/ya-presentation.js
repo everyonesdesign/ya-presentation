@@ -13,6 +13,8 @@ var yaPresentation = function (el, options) {
 
     //setting children and options
     var children = el.children;
+    if (children.length < 2) return null;
+
     var defaults = {
         animation: "fade",
         duration: 500,
@@ -85,6 +87,7 @@ var yaPresentation = function (el, options) {
     }
 
     if (options.clickToNext) {
+        el.style.cursor = "pointer";
         el.addEventListener("click", function() {
             presentation.goToNextSlide();
         });

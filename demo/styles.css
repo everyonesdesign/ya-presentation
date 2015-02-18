@@ -4,51 +4,106 @@
 
 html, body {
     height: 100%;
+    font-family: "Noto Serif", serif;
+}
+
+code {
+    display: inline-block;
+    padding: 3px;
+    background: #eee;
+    border-right: 4px;
+    font-size: .8em;
+    vertical-align: middle;
+}
+
+a {
+    color: #e01d1d;
+    text-decoration: underline;
+}
+a:hover {
+    text-decoration: none;
+}
+
+button {
+    color: #fff;
+    border: 1px solid #c11a1a;
+    outline: none;
+    background: #e01d1d;
+}
+
+.page-title {
+    margin-bottom: 0;
+    font-size: 40px;
+    text-align: center;
+}
+.page-subtitle {
+    font-size: 25px;
+    margin-bottom: 60px;
+    text-align: center;
 }
 
 .container {
     width: 800px;
-    padding: 60px 0;
+    padding: 30px 0;
     margin: auto;
 }
 
 .item {
     position: relative;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
+    -webkit-box-shadow: 0 0 3px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 0 3px rgba(0,0,0,.5);
+    box-shadow: 0 0 3px rgba(0,0,0,.5);
 }
 
 .presentation {
-    background: #eee;
+    background: #fff;
+    counter-reset: presentation;
 }
 
 .presentation-item {
     padding: 20px 60px;
     height: 360px;
-    font-size: 22px;
-    background: #eee;
+    font-size: 1.2em;
+    background: #fff;
+    counter-increment: presentation;
+}
+.presentation-item:before {
+    content: counter(presentation);
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    top: 10px;
+    left: 10px;
+    text-align: center;
+    border-radius: 20px;
+    color: #777;
+    -webkit-box-shadow: 0 0 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 0 2px rgba(0,0,0,.2);
+    box-shadow: 0 0 2px rgba(0,0,0,.2);
 }
 
 .content {
-    max-width: 800px;
+    max-width: 900px;
     margin: auto;
 }
 
-.presentation-item h1,
-.presentation-item h2,
-.presentation-item h3,
-.presentation-item h4,
-.presentation-item h5,
-.presentation-item h6 {
+.presentation-item h1 {
     text-align: center;
+    font-size: 1.8em;
+    margin-top: .4em;
 }
 
 .yap--control {
     position: absolute;
     z-index: 10;
     left: 0;
-    top: 190px;
-    padding: 10px;
-    font-size: 12px;;
+    top: 50%;
+    margin-top: -27px;
+    height: 14px;
+    padding: 20px;
+    font-size: 12px;
     background: rgba(0,0,0,.5);
     color: #fff;
     cursor: pointer;
@@ -61,7 +116,7 @@ html, body {
 
 .yap--fullscreenControl {
     position: absolute;
-    z-index: 101;
+    z-index: 11;
     top: 0;
     right: 0;
     padding: 10px;
@@ -79,25 +134,34 @@ html, body {
     right: 0;
     bottom: 0;
     height: auto !important;
-    font-size: 30px;
+}
+@media (min-width: 1200px) {
+    .yap--fullscreen {
+        font-size: 25px;
+        font-size: 1.4vw;
+    }
 }
 
-.yap--fullscreen + .yap--fullscreenControl {
+.yap--fullscreen ~ .yap--fullscreenControl {
     position: fixed;
+    z-index: 101;
     right: 0;
     top: 0;
+}
+
+.yap--fullscreen ~ .yap--control {
+    position: fixed;
+    z-index: 101;
+}
+
+.yap--fullscreen ~ .settings{
+    position: fixed;
+    z-index: 101;
 }
 
 /*
 *    ADDITIONAL
 */
-
-.presentation-item + .presentation-item {
-    background: #ffaaaa;
-}
-.presentation-item + .presentation-item + .presentation-item {
-    background: #aaffaa;
-}
 
 .settings {
     position: absolute;
@@ -109,9 +173,19 @@ html, body {
     background: rgba(0,0,0,.5);
     color: #fff;
 }
+
+.settings-text {
+    display: inline-block;
+    width: 180px;
+}
+
 .settings input,
 .settings select {
+    width: 80px;
     color: #222;
+    outline: none;
+    border: none;
+    background: #fff;
 }
 
 

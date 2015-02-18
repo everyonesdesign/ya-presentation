@@ -457,5 +457,12 @@ describe("Outer API wrap", function() {
         expect(div.className).not.toMatch(/yap--fullscreen/);
     });
 
+    it("don't initialize with one children", function() {
+        var $div = $(".presentation");
+        $(".presentation-item").not(":eq(0)").remove();
+        var presentation = $div.yaPresentation();
+        expect(presentation).toBe(null);
+    });
+
 });
 
