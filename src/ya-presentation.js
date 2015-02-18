@@ -66,15 +66,27 @@ var yaPresentation = function (el, options) {
             this._resetInProgress();
         },
         goFullscreen: function() {
+            document.addEventListener("keydown", keyBoardNav);
             yaPresentation._DOMManager.goFullscreen(el);
         },
         exitFullscreen: function() {
+            document.removeEventListener("keydown", keyBoardNav);
             yaPresentation._DOMManager.exitFullscreen(el);
         },
         toggleFullscreen: function() {
-            yaPresentation._DOMManager.toggleFullscreen(el);
+            if (yaPresentation._DOMManager.toggleFullscreen(el)) {
+                document.addEventListener("keydown", keyBoardNav);
+            } else {
+                document.removeEventListener("keydown", keyBoardNav);
+            }
         }
     };
+
+    function keyBoardNav(e) {
+        if (e.keyCode == 37) presentation.goToPrevSlide();
+        else if (e.keyCode == 39) presentation.goToNextSlide();
+        else if (e.keyCode == 27) presentation.exitFullscreen();
+    }
 
     if (options.controls) {
         var controlButtons = yaPresentation._DOMManager.addControls(el, options.texts);
@@ -254,8 +266,10 @@ yaPresentation._extend(yaPresentation, {
         toggleFullscreen: function(el) {
             if (!/\byap--fullscreen\b/.test(el.className)) {
                 yaPresentation._DOMManager.goFullscreen(el);
+                return true;
             } else {
                 yaPresentation._DOMManager.exitFullscreen(el);
+                return false;
             }
         },
         addFullscreenControl: function(el, texts) {
